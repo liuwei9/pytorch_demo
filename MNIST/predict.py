@@ -40,22 +40,24 @@ class Model(nn.Module):
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = Model().to(device)
 model = torch.load("logs/epoch20  batch900 loss0.0020713851519485616.pth")
-img = cv.imread("OIP.jpg")
-cv.imshow("OIP",img)
-img = cv.resize(img,(28,28))
+for i in range(1,6):
+    img = cv.imread(str(i)+".jpg")
+    cv.imshow(str(i),img)
+    img = cv.resize(img,(28,28))
 
-img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
-img = np.array(img).astype(np.float32)
-img = np.expand_dims(img,0)
-img = np.expand_dims(img,0)
-img=torch.from_numpy(img)
-img = img.to(device)
-outputs = model(img)
-prob = F.softmax(outputs, dim=1)
-#prob = prob.cpu().numpy()  #用GPU的数据训练的模型保存的参数都是gpu形式的，要显示则先要转回cpu，再转回numpy模式
-print(prob)  #prob是10个分类的概率
-pred = torch.argmax(prob) #选出概率最大的一个
-print(pred.item())
+    img = np.array(img).astype(np.float32)
+    img = np.expand_dims(img,0)
+    img = np.expand_dims(img,0)
+    img=torch.from_numpy(img)
+    img = img.to(device)
+    outputs = model(img)
+    prob = F.softmax(outputs, dim=1)
+    #prob = prob.cpu().numpy()  #用GPU的数据训练的模型保存的参数都是gpu形式的，要显示则先要转回cpu，再转回numpy模式
+    print(prob)  #prob是10个分类的概率
+    pred = torch.argmax(prob) #选出概率最大的一个
+    print(pred.item())
+
 cv.waitKey(0)
 cv.destroyAllWindows()

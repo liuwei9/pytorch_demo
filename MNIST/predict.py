@@ -39,7 +39,7 @@ class Model(nn.Module):
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = Model().to(device)
-model = torch.load("logs/epoch20  batch900 loss0.0020713851519485616.pth")
+model = torch.load("logs/epoch4  batch900 loss0.02468197414505994.pth")
 for i in range(1,6):
     img = cv.imread(str(i)+".jpg")
     cv.imshow(str(i),img)
